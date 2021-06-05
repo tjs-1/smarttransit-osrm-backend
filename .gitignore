@@ -109,3 +109,32 @@ debug.lua
 
 # node-osrm artifacts
 lib/binding
+src/.vscode/c_cpp_properties.json
+tn/tennessee-latest.osm.pbf
+tn/tennessee-latest.osrm
+tn/tennessee-latest.osrm.cell_metrics
+tn/tennessee-latest.osrm.cells
+tn/tennessee-latest.osrm.cnbg
+tn/tennessee-latest.osrm.cnbg_to_ebg
+tn/tennessee-latest.osrm.datasource_names
+tn/tennessee-latest.osrm.ebg
+tn/tennessee-latest.osrm.ebg_nodes
+tn/tennessee-latest.osrm.edges
+tn/tennessee-latest.osrm.enw
+tn/tennessee-latest.osrm.fileIndex
+tn/tennessee-latest.osrm.geometry
+tn/tennessee-latest.osrm.icd
+tn/tennessee-latest.osrm.maneuver_overrides
+tn/tennessee-latest.osrm.mldgr
+tn/tennessee-latest.osrm.names
+tn/tennessee-latest.osrm.nbg_nodes
+tn/tennessee-latest.osrm.partition
+tn/tennessee-latest.osrm.properties
+tn/tennessee-latest.osrm.ramIndex
+tn/tennessee-latest.osrm.restrictions
+tn/tennessee-latest.osrm.timestamp
+tn/tennessee-latest.osrm.tld
+tn/tennessee-latest.osrm.tls
+tn/tennessee-latest.osrm.turn_duration_penalties
+tn/tennessee-latest.osrm.turn_penalties_index
+tn/tennessee-latest.osrm.turn_weight_penalties
