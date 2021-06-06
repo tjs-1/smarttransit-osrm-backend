@@ -22,5 +22,67 @@ docker run -m=10g -t -i -p 5000:5000 t_osrm
 http://127.0.0.1:5000/route/v1/driving/-86.79426670074463,36.12473806954196;-86.7641830444336,36.13808266878191?overview=full&annotations=true&geometries=geojson
 ```
 
+Here is an example of the table (travel time and distance matrix) 
+
+```
+http://127.0.0.1:5000/table/v1/driving/-86.79426670074463,36.12473806954196;-86.7641830444336,36.13808266878191
+```
+
+```JSON
+{
+    "code": "Ok",
+    "durations": [
+        [
+            0,
+            373.3
+        ],
+        [
+            369.7,
+            0
+        ]
+    ],
+    "destinations": [
+        {
+            "hint": "gA8DgCYPA4ABAAAADgAAAAAAAABRAAAAJTRoP2OjFUEAAAAATKhiQgEAAAAOAAAAAAAAAFEAAADTAAAA5Z_T-kU4JwLln9P6QjgnAgAAXxEOjx5Q",
+            "distance": 0.332876,
+            "name": "Sweetbriar Avenue",
+            "location": [
+                -86.794267,
+                36.124741
+            ]
+        },
+        {
+            "hint": "QAcDgDh1JYAyAAAABgAAAAAAAAAAAAAA_oVgQnOXvUAAAAAAAAAAADIAAAAGAAAAAAAAAAAAAADTAAAAhhXU-mBsJwJpFdT6Y2wnAgAAfwAOjx5Q",
+            "distance": 2.631813,
+            "name": "Rains Avenue",
+            "location": [
+                -86.764154,
+                36.13808
+            ]
+        }
+    ],
+    "sources": [
+        {
+            "hint": "gA8DgCYPA4ABAAAADgAAAAAAAABRAAAAJTRoP2OjFUEAAAAATKhiQgEAAAAOAAAAAAAAAFEAAADTAAAA5Z_T-kU4JwLln9P6QjgnAgAAXxEOjx5Q",
+            "distance": 0.332876,
+            "name": "Sweetbriar Avenue",
+            "location": [
+                -86.794267,
+                36.124741
+            ]
+        },
+        {
+            "hint": "QAcDgDh1JYAyAAAABgAAAAAAAAAAAAAA_oVgQnOXvUAAAAAAAAAAADIAAAAGAAAAAAAAAAAAAADTAAAAhhXU-mBsJwJpFdT6Y2wnAgAAfwAOjx5Q",
+            "distance": 2.631813,
+            "name": "Rains Avenue",
+            "location": [
+                -86.764154,
+                36.13808
+            ]
+        }
+    ]
+}
+```
+
 
 **Note** - read about docker resource management. you have to enable resources in the docker system setting. by default the docker containers are limited to around 2 GB memory and a few system cores. You should change it if you want good performance. 
