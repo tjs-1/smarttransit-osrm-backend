@@ -12,4 +12,15 @@ docker build . -t t_osrm -f docker/smarttransitDockerfile
 
 4. Run the docker image
 
+```
+docker run -m=10g -t -i -p 5000:5000 t_osrm
+```
+
+5. Test it. Open a browser and visit the following. Note that only TN coordinates will work.
+
+```
+http://127.0.0.1:5000/route/v1/driving/-86.79426670074463,36.12473806954196;-86.7641830444336,36.13808266878191?overview=full&annotations=true&geometries=geojson
+```
+
+
 
