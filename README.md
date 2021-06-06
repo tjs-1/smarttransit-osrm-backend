@@ -10,7 +10,7 @@ Follow these instructions for the use of the router with smart transit project.
 docker build . -t t_osrm -f docker/smarttransitDockerfile --build-arg BUILD_CONCURRENCY=20
 ```
 
-4. Run the docker image
+4. Run the docker image (the command -m is asking 10g of local memory. see the note below on docker resources)
 
 ```
 docker run -m=10g -t -i -p 5000:5000 t_osrm
@@ -23,4 +23,4 @@ http://127.0.0.1:5000/route/v1/driving/-86.79426670074463,36.12473806954196;-86.
 ```
 
 
-
+**Note** - read about docker resource management. you have to enable resources in the docker system setting. by default the docker containers are limited to around 2 GB memory and a few system cores. You should change it if you want good performance. 
