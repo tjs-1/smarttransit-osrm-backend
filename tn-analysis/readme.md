@@ -1,7 +1,7 @@
 Launch the OSRM in bash mode. Assuming the current git folder is the working directory.
 
 ```
- docker run -m=10g -t -i -v `pwd`:/weights t_osrm bash
+ docker run -m=10g -t -i -p 5000:5000 -v `pwd`:/weights t_osrm bash
 ```
 
 Then within the shell in docker container
