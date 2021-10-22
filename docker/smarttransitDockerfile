@@ -1,16 +1,18 @@
 #Ensure that the latest map is in a folder called tn.
-FROM debian:stretch-slim as builder
+#The dockerfile is based on the docker file of the OSRM project.
+FROM debian:buster-slim as builder
 ARG DOCKER_TAG
 ARG BUILD_CONCURRENCY
+RUN apt-get update && apt-get -y --no-install-recommends install cmake make git gcc g++ libbz2-dev libxml2-dev
 RUN mkdir -p /src  && mkdir -p /opt
-COPY . /src
 COPY tn/tennessee-latest.osm.pbf /tn/tennessee-latest.osm.pbf
 WORKDIR /src
-
+RUN git config --global http.sslverify false
+RUN git clone https://github.com/smarttransit-ai/smarttransit-osrm-backend.git .
+RUN git checkout b9e9ad3703167edc68d85f453913f022263bd4e1 -b temp
 RUN NPROC=${BUILD_CONCURRENCY:-$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1)} && \
-    apt-get update && \
     apt-get -y --no-install-recommends install cmake make git gcc g++ libbz2-dev libxml2-dev \
-    libzip-dev libboost1.62-all-dev lua5.2 liblua5.2-dev libtbb-dev -o APT::Install-Suggests=0 -o APT::Install-Recommends=0 && \
+    libzip-dev libboost1.67-all-dev lua5.2 liblua5.2-dev libtbb-dev -o APT::Install-Suggests=0 -o APT::Install-Recommends=0 && \
     echo "Building OSRM ${DOCKER_TAG}" && \
     git show --format="%H" | head -n1 > /opt/OSRM_GITSHA && \
     echo "Building OSRM gitsha $(cat /opt/OSRM_GITSHA)" && \
@@ -35,20 +37,28 @@ RUN /usr/local/bin/osrm-customize  /tn/tennessee-latest.osrm
 
 # Multistage build to reduce image size - https://docs.docker.com/engine/userguide/eng-image/multistage-build/#use-multi-stage-builds
 # Only the content below ends up in the image, this helps remove /src from the image (which is large)
-FROM debian:stretch-slim as runstage
+
+FROM python:3.9-slim-buster as runstage
+ENV TZ=America/New_York
+RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
+    && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+ENV LANG en_US.utf8
 RUN mkdir -p /src  && mkdir -p /opt
+RUN 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends libboost-program-options1.62.0 libboost-regex1.62.0 \
-        libboost-date-time1.62.0 libboost-chrono1.62.0 libboost-filesystem1.62.0 \
-        libboost-iostreams1.62.0 libboost-thread1.62.0 expat liblua5.2-0 libtbb2 &&\
+    apt-get install -y --no-install-recommends libboost-program-options1.67.0 libboost-regex1.67.0 \
+        libboost-date-time1.67.0 libboost-chrono1.67.0 libboost-filesystem1.67.0 \
+        libboost-iostreams1.67.0 libboost-thread1.67.0 expat liblua5.2-0 libtbb2 &&\
     rm -rf /var/lib/apt/lists/*
 COPY --from=builder /usr/local /usr/local
 COPY --from=builder /opt /opt
 COPY --from=builder /tn /tn
+COPY requirements.txt /requirements.txt
+RUN set -ex && pip install -r /requirements.txt
 RUN /usr/local/bin/osrm-extract --help && \
     /usr/local/bin/osrm-routed --help && \
     /usr/local/bin/osrm-contract --help && \
-    /usr/local/bin/osrm-partition --help && \
+   /usr/local/bin/osrm-partition --help && \
     /usr/local/bin/osrm-customize --help
 WORKDIR /opt
 #This is the default command that will run.
