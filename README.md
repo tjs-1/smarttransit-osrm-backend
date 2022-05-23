@@ -27,6 +27,8 @@ osmconvert us-south-latest.osm.pbf -b=-90.9733,34.5341,-81.106,37.081 --complete
 osmosis --rb us-south-latest.osm.pbf --bounding-box left=-90.9733 right=-81.106 bottom=34.5341 top=37.081 --wb tennessee-latest.osm.pbf
 ```
 
+See the bounding box at http://bboxfinder.com/#34.534100,-90.973300,37.081000,-81.106000
+
 Move `tennessee-latest.osm.pbf` to `tn/` folder and delete `us-south-latest.osm.pdf`.
 
 ```bash
