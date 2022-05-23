@@ -3,7 +3,38 @@ This is a fork of OSRM backend with project specific customizations for the smar
 Follow these instructions for the use of the router with smart transit project.
 
 1. Clone the repository locally.
-2. Download the latest tennessee-latest.osm.pbf file from the geofabrik servers and copy it to a folder called tn in the root directory of the current repository.
+
+Make sure you have docker and a tool that will crop OSM data [osm cropping tools](http://docs.opentripplanner.org/en/latest/Preparing-OSM/).
+`osmconvert` is much faster than `osmosis` however `osmosis` is cross-platform and I could only get
+`osmconvert` to work on linux.
+
+To install osmosis with mac: `brew install osmosis`.
+
+# Step 2: OSM Data
+
+Download all US south data:
+
+```bash
+wget http://download.geofabrik.de/north-america/us-south-latest.osm.pbf
+```
+
+Crop the OSM to be a bounding box around the extended Tennessee region.
+
+```bash
+# if using osmconvert
+osmconvert us-south-latest.osm.pbf -b=-90.9733,34.5341,-81.106,37.081 --complete-ways -o=tennessee-latest.osm.pbf
+# or using osmosis
+osmosis --rb us-south-latest.osm.pbf --bounding-box left=-90.9733 right=-81.106 bottom=34.5341 top=37.081 --wb tennessee-latest.osm.pbf
+```
+
+Move `tennessee-latest.osm.pbf` to `tn/` folder and delete `us-south-latest.osm.pdf`.
+
+```bash
+mkdir tn && mv tennessee-latest.osm.pbf tn/
+rm us-south-latest.osm.pbf
+```
+
+3. Download the latest tennessee-latest.osm.pbf file from the geofabrik servers and copy it to a folder called tn in the root directory of the current repository.
  ``` wget http://download.geofabrik.de/north-america/us/tennessee-latest.osm.pbf && mkdir tn && mv tennessee-latest.osm.pbf tn/ ```
 4. Build Docker image (change build concurrency for your machine)
 
