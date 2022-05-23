@@ -2,7 +2,7 @@ This is a fork of OSRM backend with project specific customizations for the smar
 
 Follow these instructions for the use of the router with smart transit project.
 
-1. Clone the repository locally.
+# Step 1: Clone the repository locally.
 
 Make sure you have docker and a tool that will crop OSM data [osm cropping tools](http://docs.opentripplanner.org/en/latest/Preparing-OSM/).
 `osmconvert` is much faster than `osmosis` however `osmosis` is cross-platform and I could only get
@@ -33,22 +33,21 @@ Move `tennessee-latest.osm.pbf` to `tn/` folder and delete `us-south-latest.osm.
 mkdir tn && mv tennessee-latest.osm.pbf tn/
 rm us-south-latest.osm.pbf
 ```
-
-3. Download the latest tennessee-latest.osm.pbf file from the geofabrik servers and copy it to a folder called tn in the root directory of the current repository.
- ``` wget http://download.geofabrik.de/north-america/us/tennessee-latest.osm.pbf && mkdir tn && mv tennessee-latest.osm.pbf tn/ ```
-4. Build Docker image (change build concurrency for your machine)
+# Step 3: Build Docker image (change build concurrency for your machine)
 
 ```
 docker build . -t t_osrm -f docker/smarttransitDockerfile --build-arg BUILD_CONCURRENCY=20
 ```
 
-4. Run the docker image (the command -m is asking 10g of local memory. see the note below on docker resources)
+# Step 4:  Run
+
+Run the docker image (the command -m is asking 10g of local memory. see the note below on docker resources)
 
 ```
 docker run -m=10g -t -i -p 5000:5000 t_osrm
 ```
 
-5. Test it. Open a browser and visit the following. Note that only TN coordinates will work.
+Test it. Open a browser and visit the following. Note that only TN coordinates will work.
 
 ```
 http://127.0.0.1:5000/route/v1/driving/-86.79426670074463,36.12473806954196;-86.7641830444336,36.13808266878191?overview=full&annotations=true&geometries=geojson
