@@ -10,7 +10,7 @@ Make sure you have docker and a tool that will crop OSM data [osm cropping tools
 
 To install osmosis with mac: `brew install osmosis`.
 
-# Step 2: OSM Data
+# Step 2: OSM Data [skip the latest docker file already takes care of this step]
 
 Download all US south data:
 
