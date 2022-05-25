@@ -47,13 +47,13 @@ RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* 
 ENV LANG en_US.utf8
 RUN mkdir -p /src  && mkdir -p /opt
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends vim libboost-all-dev   lua5.2 liblua5.2-dev libtbb-dev
+    apt-get install -y --no-install-recommends vim libboost-all-dev make  gcc g++  lua5.2 liblua5.2-dev libtbb-dev
 WORKDIR /
 COPY --from=builder /usr/local /usr/local
 COPY --from=builder /opt /opt
 COPY --from=builder /tn /tn
-COPY requirements.txt /requirements.txt
-RUN set -ex && pip install -r /requirements.txt
+COPY requirementsconda.txt /requirements.txt
+RUN set -ex && conda install  --file /requirements.txt
 RUN /usr/local/bin/osrm-extract --help && \
     /usr/local/bin/osrm-routed --help && \
     /usr/local/bin/osrm-contract --help && \
