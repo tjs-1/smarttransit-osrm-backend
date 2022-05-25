@@ -53,7 +53,7 @@ COPY --from=builder /usr/local /usr/local
 COPY --from=builder /opt /opt
 COPY --from=builder /tn /tn
 COPY requirementsconda.txt /requirements.txt
-RUN set -ex && conda install  --file /requirements.txt
+#RUN set -ex && conda install  --file /requirements.txt
 RUN /usr/local/bin/osrm-extract --help && \
     /usr/local/bin/osrm-routed --help && \
     /usr/local/bin/osrm-contract --help && \
