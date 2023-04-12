@@ -138,3 +138,5 @@ tn/tennessee-latest.osrm.tls
 tn/tennessee-latest.osrm.turn_duration_penalties
 tn/tennessee-latest.osrm.turn_penalties_index
 tn/tennessee-latest.osrm.turn_weight_penalties
+
+.DS_Store
